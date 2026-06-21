@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="project_project_form_it_consulting" model="ir.ui.view">
+        <field name="name">project.project.form.it.consulting</field><field name="model">project.project</field><field name="inherit_id" ref="project.edit_project"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="after"><field name="is_it_consulting_project"/><field name="crm_lead_id" attrs="{'invisible':[('is_it_consulting_project','=',False)]}"/><field name="team_member_ids" widget="many2many_tags" attrs="{'invisible':[('is_it_consulting_project','=',False)]}"/><field name="hr_employee_ids" widget="many2many_tags" readonly="1" attrs="{'invisible':[('is_it_consulting_project','=',False)]}"/></xpath>
+            <xpath expr="//div[@name='button_box']" position="inside"><button class="oe_stat_button" icon="fa-percent"><field name="completion_rate" widget="statinfo" string="Tiến độ"/></button><button class="oe_stat_button" icon="fa-users"><field name="member_count" widget="statinfo" string="Thành viên"/></button><button class="oe_stat_button" icon="fa-exclamation-triangle"><field name="it_task_overdue" widget="statinfo" string="Quá hạn"/></button></xpath>
+        </field>
+    </record>
+    <record id="project_project_tree_it_consulting" model="ir.ui.view">
+        <field name="name">project.project.tree.it.consulting</field><field name="model">project.project</field>
+        <field name="arch" type="xml"><tree><field name="name"/><field name="crm_lead_id"/><field name="team_member_ids" widget="many2many_tags"/><field name="member_count"/><field name="it_task_total"/><field name="it_task_done"/><field name="it_task_overdue"/><field name="completion_rate" widget="progressbar"/></tree></field>
+    </record>
+    <record id="project_project_graph_it_consulting" model="ir.ui.view">
+        <field name="name">project.project.graph.it.consulting</field><field name="model">project.project</field>
+        <field name="arch" type="xml"><graph string="Tiến độ dự án tư vấn IT" type="bar"><field name="name"/><field name="completion_rate" type="measure"/><field name="member_count" type="measure"/></graph></field>
+    </record>
+    <record id="action_it_consulting_projects" model="ir.actions.act_window">
+        <field name="name">Dự án tư vấn IT</field><field name="res_model">project.project</field><field name="view_mode">tree,kanban,form,graph,pivot</field><field name="domain">[('is_it_consulting_project','=',True)]</field><field name="context">{'default_is_it_consulting_project':True}</field>
+    </record>
+</odoo>

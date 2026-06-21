@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="project_task_view_form_it_solution" model="ir.ui.view">
+        <field name="name">project.task.form.it.solution</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_form2"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form/header" position="inside">
+                <button name="action_start_it_task" string="Bắt đầu xử lý" type="object" attrs="{'invisible': ['|', ('it_task_kind', '=', False), ('it_status', '!=', 'pending')]}"/>
+                <button name="action_complete_it_task" string="Hoàn thành nghiệp vụ" type="object" class="oe_highlight" attrs="{'invisible': ['|', ('it_task_kind', '=', False), ('it_status', 'not in', ('pending', 'in_progress'))]}"/>
+                <field name="it_status" widget="statusbar" statusbar_visible="pending,in_progress,done" attrs="{'invisible': [('it_task_kind', '=', False)]}"/>
+            </xpath>
+            <xpath expr="//field[@name='partner_id' and hasclass('o_task_customer_field')]" position="after">
+                <field name="crm_lead_id"/>
+                <field name="it_task_kind"/>
+                <field name="hr_employee_ids" widget="many2many_tags" readonly="1"/>
+                <field name="sla_status" readonly="1"/>
+                <field name="it_completed_at" readonly="1" attrs="{'invisible': [('it_completed_at', '=', False)]}"/>
+                <field name="telegram_notified_at" readonly="1" attrs="{'invisible': [('telegram_notified_at', '=', False)]}"/>
+                <field name="telegram_last_error" readonly="1" attrs="{'invisible': [('telegram_last_error', '=', False)]}"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="project_task_view_tree_it_solution" model="ir.ui.view">
+        <field name="name">project.task.tree.it.solution</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_tree2"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='project_id']" position="after">
+                <field name="crm_lead_id" optional="show"/>
+                <field name="it_task_kind" optional="show"/>
+                <field name="it_status" optional="show"/>
+                <field name="sla_status" optional="show"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

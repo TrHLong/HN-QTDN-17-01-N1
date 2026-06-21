@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_it_solution_customer_pipeline" model="ir.actions.act_window">
+        <field name="name">Hồ sơ khách hàng và cơ hội</field>
+        <field name="res_model">crm.lead</field>
+        <field name="view_mode">kanban,tree,form,calendar,graph,pivot</field>
+        <field name="domain">[('type', '=', 'opportunity'), ('solution_type', '!=', False)]</field>
+        <field name="context">{'default_type': 'opportunity'}</field>
+    </record>
+    <record id="action_it_solution_task_board" model="ir.actions.act_window">
+        <field name="name">Công việc phòng tư vấn</field>
+        <field name="res_model">project.task</field>
+        <field name="view_mode">kanban,tree,form,calendar,graph,pivot</field>
+        <field name="domain">[('it_task_kind', '!=', False)]</field>
+    </record>
+    <record id="action_it_solution_ai_leads" model="ir.actions.act_window">
+        <field name="name">Hồ sơ đã phân tích AI</field>
+        <field name="res_model">crm.lead</field>
+        <field name="view_mode">tree,form,graph,pivot</field>
+        <field name="domain">[('solution_type', '!=', False), ('ai_provider_status', '!=', 'none')]</field>
+    </record>
+
+    <menuitem id="menu_qlkh_pipeline" name="Khách hàng và cơ hội" parent="menu_qlkh_root" action="action_it_solution_customer_pipeline" sequence="10"/>
+    <menuitem id="menu_qlkh_consultations" name="Các phiên tư vấn" parent="menu_qlkh_root" action="action_it_consultation_session" sequence="20"/>
+    <menuitem id="menu_qlkh_ai" name="AI phân tích nhu cầu" parent="menu_qlkh_root" action="action_it_solution_ai_assistant" sequence="30"/>
+    <menuitem id="menu_qlkh_ai_history" name="Hồ sơ AI đã xử lý" parent="menu_qlkh_root" action="action_it_solution_ai_leads" sequence="40"/>
+
+    <menuitem id="menu_qlcv_projects" name="Dự án tư vấn IT" parent="menu_qlcv_root" action="action_it_consulting_projects" sequence="10"/>
+    <menuitem id="menu_qlcv_tasks" name="Công việc và SLA" parent="menu_qlcv_root" action="action_it_solution_task_board" sequence="20"/>
+</odoo>

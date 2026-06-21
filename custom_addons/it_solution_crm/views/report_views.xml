@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="project_task_search_it_solution_report" model="ir.ui.view">
+        <field name="name">project.task.search.it.solution.report</field>
+        <field name="model">project.task</field>
+        <field name="arch" type="xml">
+            <search string="Báo cáo công việc tư vấn IT">
+                <field name="name"/>
+                <field name="crm_lead_id"/>
+                <field name="partner_id"/>
+                <field name="user_ids"/>
+                <filter name="it_tasks" string="Công việc tư vấn IT" domain="[('it_task_kind', '!=', False)]"/>
+                <filter name="pending" string="Chờ xử lý" domain="[('it_status', '=', 'pending')]"/>
+                <filter name="in_progress" string="Đang xử lý" domain="[('it_status', '=', 'in_progress')]"/>
+                <filter name="done" string="Hoàn thành" domain="[('it_status', '=', 'done')]"/>
+                <filter name="overdue" string="Quá hạn SLA" domain="[('sla_status', '=', 'overdue')]"/>
+                <separator/>
+                <filter name="group_status" string="Nhóm theo trạng thái" context="{'group_by': 'it_status'}"/>
+                <filter name="group_sla" string="Nhóm theo SLA" context="{'group_by': 'sla_status'}"/>
+                <filter name="group_kind" string="Nhóm theo loại việc" context="{'group_by': 'it_task_kind'}"/>
+                <filter name="group_customer" string="Nhóm theo khách hàng" context="{'group_by': 'partner_id'}"/>
+                <filter name="group_user" string="Nhóm theo người phụ trách" context="{'group_by': 'user_ids'}"/>
+                <filter name="group_deadline" string="Nhóm theo hạn xử lý" context="{'group_by': 'date_deadline'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="project_task_graph_it_solution_report" model="ir.ui.view">
+        <field name="name">project.task.graph.it.solution.report</field>
+        <field name="model">project.task</field>
+        <field name="arch" type="xml">
+            <graph string="Báo cáo công việc tư vấn IT" type="bar" sample="1">
+                <field name="it_status" type="row"/>
+                <field name="id" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="project_task_pivot_it_solution_report" model="ir.ui.view">
+        <field name="name">project.task.pivot.it.solution.report</field>
+        <field name="model">project.task</field>
+        <field name="arch" type="xml">
+            <pivot string="Phân tích công việc tư vấn IT" sample="1">
+                <field name="it_status" type="row"/>
+                <field name="it_task_kind" type="col"/>
+                <field name="id" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="crm_lead_search_it_solution_report" model="ir.ui.view">
+        <field name="name">crm.lead.search.it.solution.report</field>
+        <field name="model">crm.lead</field>
+        <field name="arch" type="xml">
+            <search string="Báo cáo cơ hội tư vấn IT">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="user_id"/>
+                <filter name="it_solution_opportunities" string="Cơ hội tư vấn IT" domain="[('solution_type', '!=', False)]"/>
+                <filter name="won" string="Thành công" domain="[('consulting_state', '=', 'won')]"/>
+                <filter name="approval" string="Chờ phê duyệt" domain="[('consulting_state', '=', 'approval')]"/>
+                <filter name="quotation" string="Đã gửi báo giá" domain="[('consulting_state', '=', 'quotation')]"/>
+                <filter name="ai_success" string="AI/API thành công" domain="[('ai_provider_status', '=', 'success')]"/>
+                <separator/>
+                <filter name="group_state" string="Nhóm theo trạng thái tư vấn" context="{'group_by': 'consulting_state'}"/>
+                <filter name="group_solution" string="Nhóm theo nhóm giải pháp" context="{'group_by': 'solution_type'}"/>
+                <filter name="group_sales" string="Nhom theo Sales IT" context="{'group_by': 'user_id'}"/>
+                <filter name="group_presales" string="Nhom theo Presales" context="{'group_by': 'presales_user_id'}"/>
+                <filter name="group_ai" string="Nhóm theo trạng thái AI" context="{'group_by': 'ai_provider_status'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="crm_lead_graph_it_solution_report" model="ir.ui.view">
+        <field name="name">crm.lead.graph.it.solution.report</field>
+        <field name="model">crm.lead</field>
+        <field name="arch" type="xml">
+            <graph string="Báo cáo cơ hội tư vấn IT" type="bar" sample="1">
+                <field name="consulting_state" type="row"/>
+                <field name="id" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="crm_lead_pivot_it_solution_report" model="ir.ui.view">
+        <field name="name">crm.lead.pivot.it.solution.report</field>
+        <field name="model">crm.lead</field>
+        <field name="arch" type="xml">
+            <pivot string="Phân tích cơ hội tư vấn IT" sample="1">
+                <field name="consulting_state" type="row"/>
+                <field name="solution_type" type="col"/>
+                <field name="id" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="action_it_solution_task_report" model="ir.actions.act_window">
+        <field name="name">Báo cáo QLCV tư vấn IT</field>
+        <field name="res_model">project.task</field>
+        <field name="view_mode">graph,pivot,tree,form</field>
+        <field name="domain">[('it_task_kind', '!=', False)]</field>
+        <field name="context">{'search_default_it_tasks': 1, 'search_default_group_status': 1}</field>
+        <field name="search_view_id" ref="project_task_search_it_solution_report"/>
+        <field name="view_ids" eval="[
+            (5, 0, 0),
+            (0, 0, {'view_mode': 'graph', 'view_id': ref('project_task_graph_it_solution_report')}),
+            (0, 0, {'view_mode': 'pivot', 'view_id': ref('project_task_pivot_it_solution_report')}),
+            (0, 0, {'view_mode': 'tree', 'view_id': ref('project.view_task_tree2')}),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('project.view_task_form2')})
+        ]"/>
+    </record>
+
+    <record id="action_it_solution_crm_report" model="ir.actions.act_window">
+        <field name="name">Báo cáo QLKH tư vấn IT</field>
+        <field name="res_model">crm.lead</field>
+        <field name="view_mode">graph,pivot,tree,form</field>
+        <field name="domain">[('solution_type', '!=', False)]</field>
+        <field name="context">{'search_default_it_solution_opportunities': 1, 'search_default_group_state': 1}</field>
+        <field name="search_view_id" ref="crm_lead_search_it_solution_report"/>
+        <field name="view_ids" eval="[
+            (5, 0, 0),
+            (0, 0, {'view_mode': 'graph', 'view_id': ref('crm_lead_graph_it_solution_report')}),
+            (0, 0, {'view_mode': 'pivot', 'view_id': ref('crm_lead_pivot_it_solution_report')}),
+            (0, 0, {'view_mode': 'tree', 'view_id': ref('crm.crm_case_tree_view_oppor')}),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('crm.crm_lead_view_form')})
+        ]"/>
+    </record>
+
+    <menuitem id="menu_it_solution_reports_root"
+              name="Báo cáo"
+              parent="menu_qlcv_root"
+              sequence="40"/>
+    <menuitem id="menu_it_solution_task_report"
+              name="Báo cáo QLCV"
+              parent="menu_it_solution_reports_root"
+              action="action_it_solution_task_report"
+              sequence="10"/>
+    <menuitem id="menu_it_solution_crm_report"
+              name="Báo cáo QLKH"
+              parent="menu_qlkh_root"
+              action="action_it_solution_crm_report"
+              sequence="70"/>
+
+    <menuitem id="menu_it_consultation_report"
+              name="Hiệu quả nhân viên tư vấn"
+              parent="menu_qlkh_root"
+              action="action_it_consultation_performance"
+              sequence="60"/>
+
+    <record id="menu_it_solution_reports_root" model="ir.ui.menu">
+        <field name="groups_id" eval="[(5, 0, 0)]"/>
+    </record>
+    <record id="menu_it_solution_task_report" model="ir.ui.menu">
+        <field name="groups_id" eval="[(5, 0, 0)]"/>
+    </record>
+    <record id="menu_it_solution_crm_report" model="ir.ui.menu">
+        <field name="groups_id" eval="[(5, 0, 0)]"/>
+    </record>
+</odoo>

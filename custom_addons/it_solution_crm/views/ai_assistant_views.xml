@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_it_solution_ai_assistant_form" model="ir.ui.view">
+        <field name="name">it.solution.ai.assistant.form</field>
+        <field name="model">it.solution.ai.assistant</field>
+        <field name="arch" type="xml">
+            <form string="Trợ lý AI nội bộ">
+                <sheet>
+                    <group string="Dữ liệu đầu vào">
+                        <field name="customer_note" placeholder="Dán nội dung gọi điện, email hoặc trao đổi với khách hàng..."/>
+                    </group>
+                    <group string="Kết quả nghiệp vụ">
+                        <group>
+                            <field name="solution_type"/>
+                            <field name="site_survey_required"/>
+                            <field name="confidence"/>
+                            <field name="provider_status"/>
+                        </group>
+                        <group>
+                            <field name="result_summary" nolabel="1"/>
+                        </group>
+                    </group>
+                    <group string="JSON để chứng minh AI/API mức 3" attrs="{'invisible': [('raw_json', '=', False)]}">
+                        <field name="raw_json" nolabel="1"/>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="action_analyze" string="AI phân tích nhu cầu" type="object" class="btn-primary"/>
+                    <button string="Đóng" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_it_solution_ai_assistant" model="ir.actions.act_window">
+        <field name="name">Trợ lý AI phân tích nhu cầu</field>
+        <field name="res_model">it.solution.ai.assistant</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_it_solution_ai_assistant_form"/>
+        <field name="target">current</field>
+    </record>
+</odoo>

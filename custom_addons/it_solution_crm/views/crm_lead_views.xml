@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="crm_lead_view_form_it_solution" model="ir.ui.view">
+        <field name="name">crm.lead.form.it.solution</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form/header" position="inside">
+                <button name="action_ai_analyze_requirement" string="AI phân tích nhu cầu" type="object" class="oe_highlight"/>
+                <button name="action_confirm_requirements" string="Xác minh nhu cầu" type="object" class="oe_highlight" attrs="{'invisible': [('consulting_state', '!=', 'new')]}"/>
+                <button name="action_request_solution_design" string="Thiết kế giải pháp" type="object" attrs="{'invisible': [('consulting_state', 'not in', ('qualified', 'survey'))]}"/>
+                <button name="action_sync_site_survey_calendar" string="Đồng bộ Calendar" type="object" attrs="{'invisible': [('site_survey_at', '=', False)]}"/>
+                <button name="action_submit_for_approval" string="Gửi phê duyệt" type="object" class="oe_highlight" attrs="{'invisible': [('consulting_state', '!=', 'solution')]}"/>
+                <button name="action_approve_solution" string="Phê duyệt" type="object" class="oe_highlight" groups="it_solution_crm.group_it_solution_manager" attrs="{'invisible': [('approval_state', '!=', 'pending')]}"/>
+                <button name="action_reject_solution" string="Từ chối" type="object" groups="it_solution_crm.group_it_solution_manager" attrs="{'invisible': [('approval_state', '!=', 'pending')]}"/>
+                <button name="action_mark_quotation_sent" string="Đã gửi báo giá" type="object" class="oe_highlight" attrs="{'invisible': [('approval_state', '!=', 'approved')]}"/>
+                <button name="action_confirm_customer_acceptance" string="Khách đồng ý" type="object" class="oe_highlight" attrs="{'invisible': [('consulting_state', '!=', 'quotation')]}"/>
+                <field name="consulting_state" widget="statusbar" statusbar_visible="new,qualified,survey,solution,approval,quotation,won"/>
+            </xpath>
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_it_tasks" type="object" class="oe_stat_button" icon="fa-tasks">
+                    <field name="it_task_count" widget="statinfo" string="Công việc"/>
+                </button>
+                <button type="object" name="action_view_consultations" class="oe_stat_button" icon="fa-comments">
+                    <field name="consultation_count" widget="statinfo" string="Lần tư vấn"/>
+                </button>
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page string="Tư vấn giải pháp IT" name="it_solution">
+                    <group>
+                        <group string="Nhu cầu">
+                            <field name="ai_requirement_input" placeholder="Dán nội dung trao đổi với khách hàng để AI trích xuất nhu cầu"/>
+                            <field name="solution_type"/>
+                            <field name="requirements_summary"/>
+                            <field name="site_address"/>
+                            <field name="solution_summary"/>
+                        </group>
+                        <group string="Phụ trách và mốc xử lý">
+                            <field name="hr_employee_id" readonly="1"/>
+                            <field name="presales_user_id"/>
+                            <field name="manager_user_id"/>
+                            <field name="site_survey_required"/>
+                            <field name="site_survey_at" attrs="{'invisible': [('site_survey_required', '=', False)]}"/>
+                            <field name="quotation_sent_at"/>
+                            <field name="approval_state" readonly="1"/>
+                            <field name="approval_note"/>
+                            <field name="approved_by_id" readonly="1" attrs="{'invisible': [('approved_by_id', '=', False)]}"/>
+                            <field name="approved_at" readonly="1" attrs="{'invisible': [('approved_at', '=', False)]}"/>
+                        </group>
+                    </group>
+                    <group string="AI/API mức 3">
+                        <group>
+                            <field name="ai_provider_status"/>
+                            <field name="ai_confidence"/>
+                            <field name="ai_last_analyzed_at"/>
+                            <field name="ai_error_message" attrs="{'invisible': [('ai_error_message', '=', False)]}"/>
+                        </group>
+                        <group>
+                            <field name="calendar_event_id"/>
+                            <field name="calendar_event_url" widget="url"/>
+                            <field name="calendar_synced_at"/>
+                        </group>
+                    </group>
+                    <field name="ai_analysis_json" readonly="1" attrs="{'invisible': [('ai_analysis_json', '=', False)]}"/>
+                    <field name="it_task_ids" context="{'default_partner_id': partner_id}">
+                        <tree editable="bottom">
+                            <field name="name"/>
+                            <field name="it_task_kind"/>
+                            <field name="user_ids" widget="many2many_tags"/>
+                            <field name="date_deadline"/>
+                            <field name="it_status"/>
+                            <field name="sla_status"/>
+                            <field name="company_id" invisible="1"/>
+                            <field name="project_id" invisible="1"/>
+                            <field name="stage_id"/>
+                        </tree>
+                    </field>
+                </page>
+                <page string="Lịch sử tư vấn" name="consultation_history">
+                    <group>
+                        <field name="consultation_count" readonly="1"/>
+                        <field name="successful_consultation_count" readonly="1"/>
+                        <field name="good_rating_count" readonly="1"/>
+                        <field name="successful_no_order_count" readonly="1"/>
+                    </group>
+                    <field name="consultation_session_ids" context="{'default_lead_id': active_id}">
+                        <tree editable="bottom"><field name="consulted_at"/><field name="consultant_user_id"/><field name="channel"/><field name="outcome"/><field name="purchase_outcome"/><field name="customer_rating"/><field name="state"/></tree>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

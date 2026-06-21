@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Giao diện triển khai của phòng tư vấn chỉ công bố ba ứng dụng nghiệp vụ. -->
+    <record id="mail.menu_root_discuss" model="ir.ui.menu"><field name="active">False</field></record>
+    <record id="calendar.mail_menu_calendar" model="ir.ui.menu"><field name="active">False</field></record>
+    <record id="sales_team.menu_sale_config" model="ir.ui.menu"><field name="active">False</field></record>
+    <record id="contacts.menu_contacts" model="ir.ui.menu"><field name="active">False</field></record>
+    <record id="crm.crm_menu_root" model="ir.ui.menu"><field name="active">False</field></record>
+    <record id="project.menu_main_pm" model="ir.ui.menu"><field name="active">False</field></record>
+    <record id="base.menu_board_root" model="ir.ui.menu"><field name="active">False</field></record>
+    <record id="utm.menu_link_tracker_root" model="ir.ui.menu"><field name="active">False</field></record>
+    <record id="base.menu_management" model="ir.ui.menu"><field name="active">False</field></record>
+    <record id="base.menu_administration" model="ir.ui.menu"><field name="active">False</field></record>
+    <record id="base.menu_tests" model="ir.ui.menu"><field name="active">False</field></record>
+</odoo>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_it_operation_log_tree" model="ir.ui.view"><field name="name">it.operation.log.tree</field><field name="model">it.operation.log</field><field name="arch" type="xml"><tree create="false" edit="false" delete="false"><field name="occurred_at"/><field name="user_id"/><field name="employee_id"/><field name="action"/><field name="model_name"/><field name="record_name"/><field name="detail"/></tree></field></record>
+    <record id="action_it_operation_log" model="ir.actions.act_window"><field name="name">Nhật ký thao tác</field><field name="res_model">it.operation.log</field><field name="view_mode">tree</field></record>
+    <menuitem id="menu_qlkh_audit" name="Nhật ký thao tác" parent="menu_qlkh_root" action="action_it_operation_log" sequence="90" groups="it_solution_crm.group_it_solution_manager"/>
+    <menuitem id="menu_qlcv_audit" name="Nhật ký thao tác" parent="menu_qlcv_root" action="action_it_operation_log" sequence="90" groups="it_solution_crm.group_it_solution_manager"/>
+</odoo>

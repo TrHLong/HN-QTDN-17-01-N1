@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form_it_solution" model="ir.ui.view">
+        <field name="name">res.config.settings.form.it.solution</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('settings')]" position="inside">
+                <div class="app_settings_block" data-string="IT Solution CRM" string="IT Solution CRM">
+                    <h2>IT Solution CRM - AI và API ngoài</h2>
+                    <div class="row mt16 o_settings_container">
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane"/>
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">AI/LLM phân tích nhu cầu</span>
+                                <div class="text-muted">Endpoint tương thích OpenAI Chat Completions hoặc gateway nội bộ.</div>
+                                <div class="content-group">
+                                    <field name="it_ai_endpoint" placeholder="https://api.example.com/v1/chat/completions"/>
+                                    <field name="it_ai_api_key" password="True"/>
+                                    <field name="it_ai_model"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane"/>
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">Google Calendar khảo sát</span>
+                                <div class="text-muted">Dùng để tạo lịch khảo sát hiện trạng với khách hàng.</div>
+                                <div class="content-group">
+                                    <field name="it_google_calendar_id" placeholder="primary"/>
+                                    <field name="it_google_access_token" password="True"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane"/>
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">Telegram thông báo công việc</span>
+                                <div class="text-muted">Gửi thông báo khi giao việc hoặc khi SLA quá hạn.</div>
+                                <div class="content-group">
+                                    <field name="it_telegram_bot_token" password="True"/>
+                                    <field name="it_telegram_chat_id"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>
