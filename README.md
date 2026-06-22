@@ -150,3 +150,9 @@ Luồng mô tả quá trình từ khi khách hàng gửi nhu cầu đến khi Sa
 2. **Cần khảo sát:** tạo cơ hội Wi-Fi/camera/server, bật cần khảo sát hiện trạng, xác minh nhu cầu, kiểm tra task khảo sát trong QLCV, hoàn thành khảo sát để chuyển sang thiết kế giải pháp.
 3. **Phê duyệt và SLA:** gửi phương án cho trưởng phòng, kiểm tra task phê duyệt trong QLCV, duyệt/từ chối, theo dõi task báo giá, follow-up và cảnh báo quá hạn SLA.
 
+### Trợ lý AI hỏi nhanh
+
+Menu `QLKH > Trợ lý AI hỏi nhanh` hỗ trợ tra cứu cơ hội, doanh thu, phân công HRM, công việc và SLA bằng hội thoại. Trợ lý chạy được bằng dữ liệu nội bộ khi chưa có API key và tự chuyển sang LLM/API ngoài khi được cấu hình.
+
+Hướng dẫn cấu hình và kiểm thử: `docs/AI_ASSISTANT_SETUP.md`.
+

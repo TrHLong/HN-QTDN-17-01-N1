@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_it_solution_ai_chat_form" model="ir.ui.view">
+        <field name="name">it.solution.ai.chat.form</field>
+        <field name="model">it.solution.ai.chat</field>
+        <field name="arch" type="xml">
+            <form string="Trợ lý AI hỏi nhanh">
+                <sheet>
+                    <div class="oe_title">
+                        <h1>Trợ lý dữ liệu QLKH - QLCV</h1>
+                        <p class="text-muted">
+                            Hỏi nhanh về cơ hội, doanh thu, phân công HRM, công việc và SLA.
+                        </p>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="provider_status" widget="badge"/>
+                        </group>
+                        <group>
+                            <field name="message_count"/>
+                        </group>
+                    </group>
+                    <group string="Đặt câu hỏi">
+                        <field name="question"
+                               nolabel="1"
+                               placeholder="Ví dụ: Công việc nào đang quá hạn? Ai phụ trách GreenLake?"/>
+                        <button name="action_ask"
+                                string="Hỏi trợ lý"
+                                type="object"
+                                class="btn-primary"
+                                icon="fa-paper-plane"/>
+                    </group>
+                    <group string="Câu trả lời gần nhất" attrs="{'invisible': [('answer', '=', False)]}">
+                        <field name="answer" nolabel="1" widget="html"/>
+                    </group>
+                    <group string="Lịch sử hội thoại" attrs="{'invisible': [('conversation_html', '=', False)]}">
+                        <field name="conversation_html" nolabel="1" widget="html"/>
+                    </group>
+                    <group string="Dữ liệu kiểm chứng" groups="it_solution_crm.group_it_solution_manager"
+                           attrs="{'invisible': [('context_json', '=', False)]}">
+                        <field name="context_json" nolabel="1"/>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="action_clear"
+                            string="Xóa hội thoại"
+                            type="object"
+                            class="btn-secondary"
+                            attrs="{'invisible': [('message_count', '=', 0)]}"/>
+                    <button string="Đóng" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_it_solution_ai_chat" model="ir.actions.act_window">
+        <field name="name">Trợ lý AI hỏi nhanh</field>
+        <field name="res_model">it.solution.ai.chat</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_it_solution_ai_chat_form"/>
+        <field name="target">current</field>
+        <field name="context">{}</field>
+    </record>
+</odoo>

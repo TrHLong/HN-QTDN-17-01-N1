@@ -1,5 +1,6 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_it_solution_ai_assistant_user,it.solution.ai.assistant.user,model_it_solution_ai_assistant,it_solution_crm.group_it_solution_user,1,1,1,1
+access_it_solution_ai_chat_user,it.solution.ai.chat.user,model_it_solution_ai_chat,it_solution_crm.group_it_solution_user,1,1,1,1
 access_it_consultation_user,it.consultation.session.user,model_it_consultation_session,it_solution_crm.group_it_solution_user,1,1,1,0
 access_it_consultation_manager,it.consultation.session.manager,model_it_consultation_session,it_solution_crm.group_it_solution_manager,1,1,1,1
 access_it_operation_log_user,it.operation.log.user,model_it_operation_log,it_solution_crm.group_it_solution_user,1,0,0,0

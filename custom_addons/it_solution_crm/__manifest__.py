@@ -14,6 +14,7 @@
         "views/root_menu_views.xml",
         "views/res_config_settings_views.xml",
         "views/ai_assistant_views.xml",
+        "views/ai_chat_views.xml",
         "views/consultation_session_views.xml",
         "views/crm_lead_views.xml",
         "views/project_project_views.xml",

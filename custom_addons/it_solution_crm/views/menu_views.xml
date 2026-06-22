@@ -23,6 +23,7 @@
     <menuitem id="menu_qlkh_pipeline" name="Khách hàng và cơ hội" parent="menu_qlkh_root" action="action_it_solution_customer_pipeline" sequence="10"/>
     <menuitem id="menu_qlkh_consultations" name="Các phiên tư vấn" parent="menu_qlkh_root" action="action_it_consultation_session" sequence="20"/>
     <menuitem id="menu_qlkh_ai" name="AI phân tích nhu cầu" parent="menu_qlkh_root" action="action_it_solution_ai_assistant" sequence="30"/>
+    <menuitem id="menu_qlkh_ai_chat" name="Trợ lý AI hỏi nhanh" parent="menu_qlkh_root" action="action_it_solution_ai_chat" sequence="35"/>
     <menuitem id="menu_qlkh_ai_history" name="Hồ sơ AI đã xử lý" parent="menu_qlkh_root" action="action_it_solution_ai_leads" sequence="40"/>
 
     <menuitem id="menu_qlcv_projects" name="Dự án tư vấn IT" parent="menu_qlcv_root" action="action_it_consulting_projects" sequence="10"/>

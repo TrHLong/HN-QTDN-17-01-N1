@@ -203,6 +203,51 @@ class TestCrmAutomation(TransactionCase):
         self.assertEqual(lead.ai_provider_status, "success")
         self.assertAlmostEqual(lead.ai_confidence, 0.91)
 
+    def test_ai_chat_answers_overdue_question_from_live_data(self):
+        lead = self._create_lead()
+        task = lead.it_task_ids.filtered(
+            lambda item: item.it_task_kind == "initial_contact"
+        )
+        task.date_deadline = fields.Date.context_today(task) - timedelta(days=1)
+        chat = self.env["it.solution.ai.chat"].create(
+            {"question": "Công việc nào đang quá hạn?"}
+        )
+
+        chat.action_ask()
+
+        self.assertEqual(chat.provider_status, "local")
+        self.assertIn("quá hạn", chat.answer)
+        self.assertIn(task.name, chat.answer)
+        self.assertEqual(chat.message_count, 1)
+
+    def test_ai_chat_calls_configured_external_api(self):
+        self._create_lead()
+        params = self.env["ir.config_parameter"].sudo()
+        params.set_param("it_solution_crm.ai_endpoint", "https://ai.example.test/chat")
+        params.set_param("it_solution_crm.ai_api_key", "test-key")
+        chat = self.env["it.solution.ai.chat"].create(
+            {"question": "Tóm tắt tình hình phòng tư vấn"}
+        )
+        payload = {
+            "choices": [
+                {
+                    "message": {
+                        "content": "Hiện có một cơ hội tư vấn đang được theo dõi."
+                    }
+                }
+            ]
+        }
+
+        with patch(
+            "odoo.addons.it_solution_crm.models.ai_chat.requests.post",
+            return_value=FakeResponse(payload),
+        ) as post:
+            chat.action_ask()
+
+        self.assertTrue(post.called)
+        self.assertEqual(chat.provider_status, "success")
+        self.assertIn("một cơ hội", chat.answer)
+
     def test_google_calendar_sync_posts_site_survey_event(self):
         lead = self._create_lead()
         lead.write(
